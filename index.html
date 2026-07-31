@@ -99,6 +99,7 @@
 <p>The current main story is about a young girl with incredible powers who must navigate the challenges of her new identity.</p>
 
 <h2>Story</h2>
+<p><a href="./story.html">Main Story: Rin Aizawa Bounty Hunter</a></p>
 <a class="image-link" href="#yuki-modal">
     <img src="./images/yuki3.png" alt="Yuki" style="width:100%; max-width:500px; border-radius:12px; margin:20px 0;">
 </a>
@@ -106,14 +107,12 @@
     <a href="#" class="close">×</a>
     <img src="./images/yuki3.png" alt="Yuki enlarged">
 </div>
-<p><a href="./story.html">Read the main story</a></p>
 
 <h2>Characters</h2>
 <p><a href="./rin.html">View characters</a></p>
 
 <div class="audio-player">
     <audio id="siteAudio" preload="auto" loop>
-        <source src="./music/Princess%20Bounty%20Hunter%20(3).mp3" type="audio/mpeg">
     </audio>
     <button id="playPauseBtn" type="button">Play</button>
     <input id="volumeSlider" type="range" min="0" max="1" step="0.05" value="0.5">
@@ -129,6 +128,7 @@ const muteBtn = document.getElementById('muteBtn');
 
 audio.volume = 0.5;
 audio.muted = false;
+
 audio.src = './music/Princess%20Bounty%20Hunter%20(3).mp3';
 audio.load();
 
