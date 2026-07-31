@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Rin</title>
+    <title>Rin Aizawa</title>
     <style>
         body {
             background: #111;
@@ -20,6 +20,18 @@
         .image-link {
             cursor: pointer;
             display: inline-block;
+        }
+
+        .inline-image {
+            margin: 24px 0 20px;
+            display: inline-block;
+        }
+
+        .inline-image img {
+            width: 320px;
+            max-width: 100%;
+            border: 1px solid #666;
+            border-radius: 8px;
         }
 
         .modal {
@@ -71,10 +83,82 @@
         .audio-player input {
             font: inherit;
         }
+
+        .bio-block {
+            margin: 18px 0 8px;
+        }
+
+        .bio-block strong {
+            color: gold;
+        }
+
+        .bio-text {
+            white-space: pre-wrap;
+            margin: 18px 0 12px;
+            line-height: 1.9;
+        }
+
+        .rin-profile {
+            margin-top: 24px;
+            padding-top: 18px;
+            border-top: 1px solid #444;
+        }
+
+        .rin-profile h2 {
+            color: gold;
+            margin-bottom: 8px;
+        }
+
+        .rin-profile .bio-block,
+        .rin-profile .bio-text,
+        .rin-profile p:not(blockquote) {
+            color: white;
+        }
+
+        .rin-profile strong {
+            color: gold;
+        }
+
+        .rin-profile blockquote {
+            margin: 14px 0 0;
+            padding-left: 16px;
+            border-left: 2px solid gold;
+            color: #f0e7b2;
+            font-style: italic;
+        }
+
+        .back-link {
+            margin-top: 24px;
+            display: inline-block;
+        }
+
+        .character-section {
+            margin-top: 36px;
+            padding-top: 18px;
+            border-top: 1px solid #444;
+        }
+
+        .character-section h2 {
+            color: gold;
+            margin-bottom: 8px;
+        }
+
+        .character-section blockquote {
+            margin: 14px 0 0;
+            padding-left: 16px;
+            border-left: 2px solid gold;
+            color: #f0e7b2;
+            font-style: italic;
+        }
+
+        .character-section .bio-block,
+        .character-section p:not(blockquote) {
+            color: white;
+        }
     </style>
 </head>
 <body>
-    <h1>Rin</h1>
+    <h1>Characters</h1>
     <a class="image-link" href="#image-modal">
         <img src="./characters/Rin.png" alt="Rin" width="500">
     </a>
@@ -84,8 +168,107 @@
         <img src="./characters/Rin.png" alt="Rin enlarged">
     </div>
 
-    <p>Rin is one of the main characters in the story.</p>
-    <p><a href="./index.html">Back to Home</a></p>
+    <section class="rin-profile">
+        
+        <p class="bio-text">Name: Rin Aizawa
+
+
+
+Age: 18
+
+
+
+By day: A first-year at Shion Academy, a quiet, mostly-girls school on the hill. Top of nearly every class without appearing to try. Rooms in West Dormitory, 204.
+
+
+
+By night: A bounty hunter. She takes contracts through back-channel brokers and collects the people the law can't — or won't — touch.
+
+
+
+Her cover story: "Night shift. Stocking shelves." Nobody's ever quite bought it.
+
+Who She Is
+
+Quiet in a way that isn't calm — a held breath more than a still pond. Rin is economical with words, drier than she means to be, and allergic to being fussed over. She reads a room the way most people read a menu: exits first, then faces. Years of relying on no one have left her fluent in self-sufficiency and clumsy with kindness — it lands on her like a language she never learned to speak, and, lately, is reluctantly starting to.
+
+Under the flat calm is a girl who has only ever felt truly awake with something on the line. Ordinary hours pass her by behind a kind of smudged glass; it's in the middle of a fight that the world finally goes sharp and quiet and hers. That's the engine of her — and the quiet trouble at the heart of her: an eighteen-year-old trying to work out whether she can feel alive when nothing is trying to kill her.
+
+The Double Life
+
+Class schedules and a roommate's sticky notes on one side; broker contracts and rooftops after dark on the other. Rin keeps her two worlds in separate rooms and the door between them locked — an unremarkable college girl in daylight, something a good deal more dangerous once the sun goes down. Much of her story is about what happens when that door refuses to stay shut.
+
+Look
+
+Long black hair and a stillness she wears like armor. Black, practical clothes when she's working — and, once in a rare while, something softer, when she lets herself be a girl who gets to.
+
+The People Who Get Through
+
+
+
+
+
+Ryo Kurosaki — her oldest friend, the one person who's always known exactly what she does at night and never once flinched from it. Her anchor, and the only opinion in the world that can move her.
+
+
+
+Mei Sasaki — her relentlessly warm roommate, and the steady tug toward an ordinary life Rin never planned to want.
+
+In Her Own Words
+
+
+
+"I don't set the price. I just collect it."</p>
+    </section>
+
+    <a class="inline-image image-link" href="#image-modal-2">
+        <img src="./images/rin2.png" alt="Rin second image">
+    </a>
+
+    <div id="image-modal-2" class="modal">
+        <a href="#" class="close">×</a>
+        <img src="./images/rin2.png" alt="Rin second image enlarged">
+    </div>
+
+    <section class="character-section">
+        <h2>Yuki Kisaragi</h2>
+        <a class="inline-image image-link" href="#image-modal-yuki">
+            <img src="./images/yuki 4.png" alt="Yuki Kisaragi">
+        </a>
+
+        <div id="image-modal-yuki" class="modal">
+            <a href="#" class="close">×</a>
+            <img src="./images/yuki 4.png" alt="Yuki Kisaragi enlarged">
+        </div>
+
+        <p class="bio-block"><strong>Name:</strong> Yuki Kisaragi</p>
+        <p class="bio-block"><strong>Role:</strong> A fellow student Rin meets on campus who refuses to <em>not</em> become her friend. The loud, bright heart of the group.</p>
+        <p class="bio-block"><strong>Look:</strong> Long, wavy silver hair, blue eyes, and — unmistakably — a pair of cat ears and a matching tail. Two modes: sunny campus wear (cardigan, pleated skirt) and a bolder look after hours (pink top, black leggings, heeled boots).</p>
+
+        <p class="bio-block"><strong>Who She Is</strong><br>If Rin is a held breath, Yuki is the exhale — loud in all the places Rin goes quiet, and running entirely without an off switch. She feels everything at full volume: delight, panic, loyalty, and a genuinely heroic amount of enthusiasm about snacks. She invites herself along, fills every silence, and somehow ends up in the middle of whatever's happening. Physical affection is a given — she'll grab a sleeve, lean on a shoulder, and casually annex the personal space Rin guards with her life.</p>
+
+        <p class="bio-block">She is also, for the record, a menace to keep a secret around. Her own or anyone else's.</p>
+
+        <p class="bio-block"><strong>More Than the Volume</strong><br>The comedy is real — but it's armor, too. The sunnier Yuki gets, the more she's usually covering for something she'd rather no one looked at too closely. She goes quiet only when things are genuinely serious, which is rare enough that it lands like a struck bell when it happens. And under all the noise runs a stubborn, unshakable streak: she cannot, constitutionally, walk past someone being wronged — no matter how much simpler her life would be if she could.</p>
+
+        <p class="bio-block"><strong>Her &amp; Rin</strong><br>Yuki decided she and Rin were friends roughly four seconds after meeting her, and has spent every day since being cheerfully, relentlessly correct about it. She's the warmth that pulls Rin out of herself — the one who won't be shrugged off, won't accept the wall for an answer, and calls the unimpressed bounty hunter "boss" like it's the highest honor she can hand out.</p>
+
+        <p class="bio-block">(It is.)</p>
+
+        <p class="bio-block"><strong>In Her Own Words</strong></p>
+        <blockquote>“That's not falling for people. That's recognizing quality. There's a difference.”</blockquote>
+
+        <a class="inline-image image-link" href="#image-modal-yuki-5">
+            <img src="./images/yuki5.png" alt="Yuki Kisaragi extra image">
+        </a>
+
+        <div id="image-modal-yuki-5" class="modal">
+            <a href="#" class="close">×</a>
+            <img src="./images/yuki5.png" alt="Yuki Kisaragi extra image enlarged">
+        </div>
+    </section>
+
+    <p class="back-link"><a href="./index.html">Back to Home</a></p>
 
     <div class="audio-player">
         <audio id="siteAudio" preload="auto" loop>
