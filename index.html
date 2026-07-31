@@ -191,16 +191,15 @@ function applyState(state) {
 }
 
 function startAudioFromLoad() {
-    const state = loadState();
-    if (state.currentTime != null) {
-        audio.currentTime = state.currentTime;
-    }
-    applyState(state);
+    localStorage.removeItem(AUDIO_STATE_KEY);
+    audio.currentTime = 0;
+    audio.volume = 0.5;
+    audio.muted = false;
+    audio.src = './music/Princess%20Bounty%20Hunter%20(3).mp3';
+    audio.load();
     updateControls();
     setTimeout(() => {
-        if (audio.paused) {
-            resumeAudio();
-        }
+        resumeAudio();
     }, 500);
 }
 
@@ -247,7 +246,10 @@ audio.addEventListener('pause', () => {
 
 audio.addEventListener('timeupdate', saveState);
 audio.addEventListener('ended', saveState);
-window.addEventListener('beforeunload', saveState);
+window.addEventListener('beforeunload', () => {
+    audio.pause();
+    localStorage.removeItem(AUDIO_STATE_KEY);
+});
 
 document.querySelectorAll('a[href$=".txt"]').forEach((link) => {
     link.addEventListener('click', () => {
