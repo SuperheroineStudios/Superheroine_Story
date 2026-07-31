@@ -49,6 +49,30 @@
         .back-link:hover {
             text-decoration: underline;
         }
+
+        .audio-player {
+            margin-top: 20px;
+            padding: 12px;
+            border: 1px solid #444;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .audio-player button {
+            background: gold;
+            color: #111;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 10px;
+            cursor: pointer;
+        }
+
+        .audio-player input[type="range"] {
+            width: 100px;
+        }
     </style>
 </head>
 <body>
@@ -60,6 +84,14 @@
     </div>
 
     <iframe id="chapterFrame" class="chapter-frame" title="Chapter content"></iframe>
+
+    <div class="audio-player">
+        <audio id="chapterAudio" preload="auto"></audio>
+        <button id="prevTrackBtn" type="button">←</button>
+        <button id="playPauseBtn" type="button">Play</button>
+        <button id="nextTrackBtn" type="button">→</button>
+        <input id="volumeSlider" type="range" min="0" max="1" step="0.05" value="0.5">
+    </div>
 
     <script>
         const chapterFiles = [
@@ -78,6 +110,11 @@
         const prevLink = document.getElementById('prevLink');
         const nextLink = document.getElementById('nextLink');
         const frame = document.getElementById('chapterFrame');
+        const audio = document.getElementById('chapterAudio');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const prevTrackBtn = document.getElementById('prevTrackBtn');
+        const nextTrackBtn = document.getElementById('nextTrackBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
 
         if (chapterIndex > 0) {
             prevLink.href = './viewer.html?chapter=' + encodeURIComponent(chapterFiles[chapterIndex - 1]);
@@ -92,6 +129,148 @@
         }
 
         frame.src = './' + safeChapter;
+
+        const playlist = [
+            '../music/Moonlit%20Eternity.mp3',
+            '../music/Moonlit%20Oath.mp3',
+            '../music/Moonlit%20Resolve.mp3',
+            '../music/Moonlit%20School.mp3',
+            '../music/Moonlit%20Serenade.mp3',
+            '../music/Moonlit%20Showdown.mp3'
+        ];
+        const stateKey = 'chapter-viewer-audio-state';
+        let currentTrackIndex = 0;
+
+        audio.volume = 0.5;
+        volumeSlider.value = audio.volume;
+
+        function loadState() {
+            try {
+                return JSON.parse(localStorage.getItem(stateKey)) || {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function saveState() {
+            const state = {
+                currentTrackIndex,
+                currentTime: audio.currentTime,
+                volume: audio.volume,
+                isPlaying: !audio.paused
+            };
+            localStorage.setItem(stateKey, JSON.stringify(state));
+        }
+
+        function restoreState() {
+            const state = loadState();
+            if (state.currentTrackIndex != null) {
+                currentTrackIndex = state.currentTrackIndex;
+            }
+            if (state.volume != null) {
+                audio.volume = state.volume;
+                volumeSlider.value = audio.volume;
+            }
+            if (state.currentTime != null) {
+                audio.currentTime = state.currentTime;
+            }
+            return state;
+        }
+
+        function updatePlayButton() {
+            playPauseBtn.textContent = audio.paused ? 'Play' : 'Pause';
+        }
+
+        function playCurrentTrack() {
+            if (!audio.src) {
+                audio.src = playlist[currentTrackIndex];
+            } else if (audio.currentSrc !== playlist[currentTrackIndex]) {
+                audio.src = playlist[currentTrackIndex];
+            }
+            audio.load();
+            const tryPlay = () => {
+                const promise = audio.play();
+                if (promise && typeof promise.catch === 'function') {
+                    promise.catch(() => {
+                        setTimeout(tryPlay, 250);
+                    });
+                }
+            };
+            setTimeout(tryPlay, 100);
+            updatePlayButton();
+        }
+
+        function playNextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+            playCurrentTrack();
+        }
+
+        function startAutoPlay() {
+            if (audio.paused && audio.src) {
+                playCurrentTrack();
+            }
+        }
+
+        function setPlaybackState() {
+            updatePlayButton();
+        }
+
+        function goToPreviousTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+            playCurrentTrack();
+        }
+
+        function goToNextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+            playCurrentTrack();
+        }
+
+        playPauseBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                playCurrentTrack();
+            } else {
+                audio.pause();
+            }
+        });
+
+        prevTrackBtn.addEventListener('click', goToPreviousTrack);
+        nextTrackBtn.addEventListener('click', goToNextTrack);
+
+        volumeSlider.addEventListener('input', (event) => {
+            audio.volume = Number(event.target.value);
+            saveState();
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedState = restoreState();
+            if (savedState.isPlaying) {
+                audio.src = playlist[currentTrackIndex];
+                audio.load();
+                setTimeout(() => {
+                    playCurrentTrack();
+                }, 300);
+            } else {
+                audio.src = playlist[currentTrackIndex];
+                audio.load();
+                setTimeout(startAutoPlay, 300);
+            }
+        });
+        window.addEventListener('pointerdown', startAutoPlay, { once: true });
+        window.addEventListener('keydown', startAutoPlay, { once: true });
+        window.addEventListener('load', startAutoPlay);
+
+        audio.addEventListener('play', () => {
+            saveState();
+            setPlaybackState();
+        });
+        audio.addEventListener('pause', () => {
+            saveState();
+            setPlaybackState();
+        });
+        audio.addEventListener('timeupdate', saveState);
+        audio.addEventListener('ended', playNextTrack);
+        window.addEventListener('beforeunload', saveState);
+        updatePlayButton();
     </script>
 </body>
 </html>
