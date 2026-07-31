@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rin</title>
+    <style>
+        body {
+            background: #111;
+            color: white;
+            font-family: Georgia;
+            max-width: 800px;
+            margin: auto;
+            padding: 40px;
+            line-height: 1.7;
+        }
+
+        h1 {
+            color: gold;
+        }
+
+        .image-link {
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal:target {
+            display: flex;
+        }
+
+        .modal img {
+            max-width: 90vw;
+            max-height: 90vh;
+            width: auto;
+            height: auto;
+            border: 2px solid white;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 32px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rin</h1>
+    <a class="image-link" href="#image-modal">
+        <img src="./characters/Rin.png" alt="Rin" width="500">
+    </a>
+
+    <div id="image-modal" class="modal">
+        <a href="#" class="close">×</a>
+        <img src="./characters/Rin.png" alt="Rin enlarged">
+    </div>
+
+    <p>Rin is one of the main characters in the story.</p>
+    <p><a href="./index.html">Back to Home</a></p>
+</body>
+</html>
