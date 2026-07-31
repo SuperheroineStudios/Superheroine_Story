@@ -9,7 +9,7 @@
             font-family: Georgia;
             max-width: 800px;
             margin: auto;
-            padding: 40px;
+            padding: 40px 40px 120px;
         }
 
         h1 {
@@ -58,6 +58,25 @@
             color: white;
             font-size: 32px;
             text-decoration: none;
+        }
+
+        .audio-player {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 1px solid #444;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 2000;
+        }
+
+        .audio-player button,
+        .audio-player input {
+            font: inherit;
         }
     </style>
 </head>
@@ -117,6 +136,144 @@
 <p><a href="./chapters/29.txt">Chapter 29</a></p>
 <p><a href="./chapters/30.txt">Chapter 30</a></p>
 <p><a href="./chapters/31.txt">Chapter 31</a></p>
+
+<div class="audio-player">
+    <audio id="siteAudio" preload="auto" loop autoplay>
+        <source src="./music/Princess Bounty Hunter (3).mp3" type="audio/mpeg">
+    </audio>
+    <button id="playPauseBtn" type="button">Play</button>
+    <input id="volumeSlider" type="range" min="0" max="1" step="0.05" value="0.5">
+    <button id="muteBtn" type="button">Mute</button>
+</div>
+
+<script>
+const AUDIO_STATE_KEY = 'storysite-audio-state';
+const audio = document.getElementById('siteAudio');
+const playPauseBtn = document.getElementById('playPauseBtn');
+const volumeSlider = document.getElementById('volumeSlider');
+const muteBtn = document.getElementById('muteBtn');
+
+audio.volume = 0.5;
+audio.muted = false;
+
+function loadState() {
+    try {
+        return JSON.parse(localStorage.getItem(AUDIO_STATE_KEY)) || {};
+    } catch (e) {
+        return {};
+    }
+}
+
+function saveState() {
+    const state = {
+        isPlaying: !audio.paused,
+        currentTime: audio.currentTime,
+        volume: audio.volume,
+        muted: audio.muted
+    };
+    localStorage.setItem(AUDIO_STATE_KEY, JSON.stringify(state));
+}
+
+function updateControls() {
+    playPauseBtn.textContent = audio.paused ? 'Play' : 'Pause';
+    muteBtn.textContent = audio.muted ? 'Unmute' : 'Mute';
+    volumeSlider.value = audio.volume;
+}
+
+function pauseAudio() {
+    audio.pause();
+    saveState();
+    updateControls();
+}
+
+function resumeAudio() {
+    audio.volume = 0.5;
+    audio.muted = false;
+    const playback = audio.play();
+    if (playback && typeof playback.then === 'function') {
+        playback.then(() => {
+            saveState();
+            updateControls();
+        }).catch(() => {
+            updateControls();
+        });
+    } else {
+        saveState();
+        updateControls();
+    }
+}
+
+function applyState(state) {
+    if (state.volume != null) audio.volume = state.volume;
+    if (state.muted != null) audio.muted = state.muted;
+    if (state.currentTime != null) audio.currentTime = state.currentTime;
+    if (state.isPlaying === true || Object.keys(state).length === 0) {
+        resumeAudio();
+    } else {
+        pauseAudio();
+    }
+}
+
+function startAudioFromLoad() {
+    applyState(loadState());
+    updateControls();
+    setTimeout(() => {
+        if (audio.paused) {
+            resumeAudio();
+        }
+    }, 300);
+}
+
+function startAudioOnFirstInteraction() {
+    resumeAudio();
+    window.removeEventListener('pointerdown', startAudioOnFirstInteraction);
+    window.removeEventListener('keydown', startAudioOnFirstInteraction);
+}
+
+document.addEventListener('DOMContentLoaded', startAudioFromLoad);
+window.addEventListener('pointerdown', startAudioOnFirstInteraction, { once: true });
+window.addEventListener('keydown', startAudioOnFirstInteraction, { once: true });
+
+playPauseBtn.addEventListener('click', () => {
+    if (audio.paused) {
+        resumeAudio();
+    } else {
+        pauseAudio();
+    }
+});
+
+volumeSlider.addEventListener('input', (event) => {
+    audio.volume = Number(event.target.value);
+    saveState();
+    updateControls();
+});
+
+muteBtn.addEventListener('click', () => {
+    audio.muted = !audio.muted;
+    saveState();
+    updateControls();
+});
+
+audio.addEventListener('play', () => {
+    saveState();
+    updateControls();
+});
+
+audio.addEventListener('pause', () => {
+    saveState();
+    updateControls();
+});
+
+audio.addEventListener('timeupdate', saveState);
+audio.addEventListener('ended', saveState);
+window.addEventListener('beforeunload', saveState);
+
+document.querySelectorAll('a[href$=".txt"]').forEach((link) => {
+    link.addEventListener('click', () => {
+        pauseAudio();
+    });
+});
+</script>
 
 </body>
 </html>
