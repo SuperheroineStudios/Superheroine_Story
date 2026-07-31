@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Chapter Viewer</title>
+    <style>
+        body {
+            background: #111;
+            color: white;
+            font-family: Georgia;
+            max-width: 800px;
+            margin: auto;
+            padding: 40px 20px 80px;
+            line-height: 1.8;
+        }
+
+        .chapter-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .chapter-nav a {
+            color: gold;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .chapter-nav a:hover {
+            text-decoration: underline;
+        }
+
+        .chapter-frame {
+            width: 100%;
+            min-height: 70vh;
+            border: 1px solid #444;
+            border-radius: 10px;
+            background: white;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 16px;
+            color: lightgray;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <a class="back-link" href="../story.html">← Back to Story</a>
+
+    <div class="chapter-nav">
+        <a id="prevLink" href="#">← Previous Chapter</a>
+        <a id="nextLink" href="#">Next Chapter →</a>
+    </div>
+
+    <iframe id="chapterFrame" class="chapter-frame" title="Chapter content"></iframe>
+
+    <script>
+        const chapterFiles = [
+            'prologue.txt',
+            '1.txt', '2.txt', '3.txt', '4.txt', '5.txt', '6.txt', '7.txt', '8.txt', '9.txt',
+            '10.txt', '11.txt', '12.txt', '13.txt', '14.txt', '15.txt', '16.txt', '17.txt', '18.txt', '19.txt',
+            '20.txt', '21.txt', '22.txt', '23.txt', '24.txt', '25.txt', '26.txt', '27.txt', '28.txt', '29.txt',
+            '30.txt', '31.txt'
+        ];
+
+        const params = new URLSearchParams(window.location.search);
+        const requestedChapter = params.get('chapter') || 'prologue.txt';
+        const safeChapter = chapterFiles.includes(requestedChapter) ? requestedChapter : 'prologue.txt';
+        const chapterIndex = chapterFiles.indexOf(safeChapter);
+
+        const prevLink = document.getElementById('prevLink');
+        const nextLink = document.getElementById('nextLink');
+        const frame = document.getElementById('chapterFrame');
+
+        if (chapterIndex > 0) {
+            prevLink.href = './viewer.html?chapter=' + encodeURIComponent(chapterFiles[chapterIndex - 1]);
+        } else {
+            prevLink.style.display = 'none';
+        }
+
+        if (chapterIndex < chapterFiles.length - 1) {
+            nextLink.href = './viewer.html?chapter=' + encodeURIComponent(chapterFiles[chapterIndex + 1]);
+        } else {
+            nextLink.style.display = 'none';
+        }
+
+        frame.src = './' + safeChapter;
+    </script>
+</body>
+</html>
