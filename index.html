@@ -23,6 +23,42 @@
         p {
             line-height: 1.7;
         }
+
+        .image-link {
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal:target {
+            display: flex;
+        }
+
+        .modal img {
+            max-width: 90vw;
+            max-height: 90vh;
+            width: auto;
+            height: auto;
+            border: 2px solid white;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 32px;
+            text-decoration: none;
+        }
     </style>
 </head>
 
@@ -30,15 +66,31 @@
 
 <h1>Welcome to Superheroine Studios</h1>
 
+<a class="image-link" href="#morgana-modal">
+    <img src="./images/morgana.png" alt="Morgana" style="width:100%; max-width:500px; border-radius:12px; margin:20px 0;">
+</a>
+
+<div id="morgana-modal" class="modal">
+    <a href="#" class="close">×</a>
+    <img src="./images/morgana.png" alt="Morgana enlarged">
+</div>
+
 <p>Enjoy Our Current Stories.</p>
 
 <p>The current main story is about a young girl with incredible powers who must navigate the challenges of her new identity.</p>
 
 <h2>Story</h2>
+<a class="image-link" href="#yuki-modal">
+    <img src="./images/yuki3.png" alt="Yuki" style="width:100%; max-width:500px; border-radius:12px; margin:20px 0;">
+</a>
+<div id="yuki-modal" class="modal">
+    <a href="#" class="close">×</a>
+    <img src="./images/yuki3.png" alt="Yuki enlarged">
+</div>
 <p><a href="./story.html">Read the main story</a></p>
 
 <h2>Characters</h2>
-<p><a href="./rin.html">Rin</a></p>
+<p><a href="./rin.html">View characters</a></p>
 
 </body>
 </html>
